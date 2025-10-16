@@ -1,7 +1,7 @@
 \ProvidesClass{sdu_exp_report}[2025/10/16 Shandong University Experiment Report Template]
 
 % 1. 基础类和字体设置
-\LoadClass[a4paper, 10.5pt]{article} % 基于 article 文档类，设置基础字号
+\LoadClass[a4paper, 11pt]{article} % 基于 article 文档类，设置基础字号
 
 % 2. 宏包导入
 \RequirePackage{geometry}     % 设置页边距
@@ -37,9 +37,10 @@
 % ==== 新增：全局与表格行距设置，避免拥挤 ====
 % 全局行距（基于 10.5pt，略放大）
 \linespread{1} 
+\setlength{\topmargin}{-1.2cm} % 将顶部留白设置为 2cm
 % 表格默认行高：增大行距和额外行高
 \renewcommand{\arraystretch}{1}
-\setlength{\extrarowheight}{0.5ex}
+\setlength{\extrarowheight}{0.3ex}
 % ============================================
 
 % 5. 定义报告信息存储命令
@@ -67,16 +68,15 @@
 % 8. 核心绘图命令：\DrawExperimentReport
 \newcommand{\DrawExperimentReport}{%
     \pagestyle{empty} % 报告页不显示页眉页脚
-
     % --- 标题部分 ---
     \begin{center}
         \sffamily % 设置为非衬线字体
-        \fontsize{15pt}{18pt}\selectfont % 设置字号为 15pt
-        \textbf{山东大学\underline{\hspace{1em }\@DepartmentName\hspace{1em }}学院} \\
+        \fontsize{15pt}{28pt}\selectfont % 设置字号为 16pt
+        {山东大学\underline{\hspace{1em }\@DepartmentName\hspace{1em }}学院} \\
         \vspace{4pt} % 标题内的小间距
-        \textbf{\underline{\hspace{1em }\@CourseName \hspace{1em }}课程实验报告}
+        {\underline{\hspace{1em }\@CourseName \hspace{1em }}课程实验报告}
     \end{center}
-    \vspace{10.5pt} % 标题与表格之间的间距
+    % \vspace{3pt} % 标题与表格之间的间距
     % --- 表格部分 ---
     \begin{xltabular}
         {\linewidth}{|X|X|X|}\endhead
@@ -92,23 +92,23 @@
         } \\ \hline
         \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
             \textsf{\textbf{实验目的：}} \@ExperimentPurpose
-            \rule{0pt}{3\baselineskip}%
+            \vspace*{2.5\baselineskip}%
         } \\ \hline
         \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
             \textsf{\textbf{硬件环境：}} \@HardwareEnv
-            \rule{0pt}{2\baselineskip}%
+            \vspace*{1.5\baselineskip}%
         } \\ \hline
         \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
             \textsf{\textbf{软件环境：}} \@SoftwareEnv
-            \rule{0pt}{2\baselineskip}%
+            \vspace*{1.5\baselineskip}%
         } \\ \hline
         \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
             \textsf{\textbf{实验步骤及内容：}} \@procedurecontent
-            \rule{0pt}{2in}%
+            \vspace*{2in}%
         } \\ \hline
         \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
             \textsf{\textbf{结论分析与体会：}} \@reflectioncontent
-            \rule{0pt}{1.5in}%
+            \vspace*{1.7in}%
         } \\
         \hline
     \end{xltabular}
