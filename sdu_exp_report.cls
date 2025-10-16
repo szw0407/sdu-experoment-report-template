@@ -45,7 +45,7 @@
 \setlength{\extrarowheight}{0.3ex}
 % ============================================
 
-% 5. 定义报告信息存储命令
+% 5. 定义报告信息存储命令（去掉实验步骤和体会的命令）
 \newcommand{\DepartmentName}[1]{\def\@DepartmentName{#1}}
 \newcommand{\CourseName}[1]{\def\@CourseName{#1}}
 \newcommand{\StudentId}[1]{\def\@StudentId{#1}}
@@ -58,8 +58,33 @@
 \newcommand{\ExperimentPurpose}[1]{\def\@ExperimentPurpose{#1}}
 \newcommand{\HardwareEnv}[1]{\def\@HardwareEnv{#1}}
 \newcommand{\SoftwareEnv}[1]{\def\@SoftwareEnv{#1}}
-\newcommand{\ExperimentProcedure}[1]{\def\@ExperimentProcedure{#1}}
-\newcommand{\ExperimentReflection}[1]{\def\@ExperimentReflection{#1}}
+% \newcommand{\ExperimentProcedure}[1]{\def\@ExperimentProcedure{#1}} % 删除
+% \newcommand{\ExperimentReflection}[1]{\def\@ExperimentReflection{#1}} % 删除
+
+% 6. 定义实验步骤和体会环境（直接画框）
+\newenvironment{ExperimentProcedure}
+  {\vspace{-10pt} % 表格与正文之间的间距
+  \begin{mdframed}[
+      style=mymdfstyle,
+      innertopmargin=2pt,
+      skipabove=0pt,
+      innerleftmargin=6pt,
+    ]
+    \textsf{实验步骤及内容：}\\
+  }
+  {\end{mdframed}}
+
+\newenvironment{ExperimentReflection}
+  {\vspace{-10pt} % 表格与正文之间的间距
+    \begin{mdframed}[
+      style=mymdfstyle,
+      innertopmargin=2pt,
+      skipabove=0pt,
+      innerleftmargin=6pt,
+    ]
+    \textsf{结论分析与体会：}\\
+  }
+  {\end{mdframed}}
 
 % 8. 核心绘图命令：\DrawExperimentReport
 \newcommand{\DrawExperimentReport}{%
@@ -98,29 +123,12 @@
     \textsf{硬件环境：} \@HardwareEnv
     \mdfsubtitle[
         subtitleaboveline=true,
-        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
+        subtitleabovelinewidth=0.5pt,
         subtitlebelowskip=0.2\baselineskip,
         subtitleinneraboveskip=0pt,
         subtitleinnerbelowskip=0pt,
     ]{}
     \textsf{软件环境：} \@SoftwareEnv
-    \mdfsubtitle[
-        subtitleaboveline=true,
-        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
-        subtitlebelowskip=0.2\baselineskip,
-        subtitleinneraboveskip=0pt,
-        subtitleinnerbelowskip=0pt,
-    ]{}
-    \textsf{实验步骤及内容：} \@ExperimentProcedure
-    \mdfsubtitle[
-        subtitleaboveline=true,
-        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
-        subtitlebelowskip=0.2\baselineskip,
-        subtitleinneraboveskip=0pt,
-        subtitleinnerbelowskip=0pt,
-    ]{}
-    \textsf{结论分析与体会：} \@ExperimentReflection
-
     \end{mdframed}
 }
 
