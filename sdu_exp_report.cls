@@ -1,7 +1,7 @@
 \ProvidesClass{sdu_exp_report}[2025/10/16 Shandong University Experiment Report Template]
 
 % 1. 基础类和字体设置
-\LoadClass[a4paper, 10pt]{article} % 基于 article 文档类，设置基础字号
+\LoadClass[a4paper, 10.5pt]{article} % 基于 article 文档类，设置基础字号
 
 % 2. 宏包导入
 \RequirePackage{geometry}     % 设置页边距
@@ -20,8 +20,6 @@
 \ifxetex\else
     \ClassError{sdu_exp_report}{You must use the 'xelatex' driver.}{Please choose 'xelatex'.}
 \fi
-
-\newcolumntype{Y}{>{\RaggedRight\arraybackslash}p{0.33\textwidth}}
 
 % 3. 几何布局 (页边距)
 \geometry{
@@ -71,10 +69,11 @@
         \textbf{\underline{\hspace{1em }\@CourseName \hspace{1em }}课程实验报告}
     \end{center}
     \vspace{10.5pt} % 标题与表格之间的间距
-    \centering
+    \noindent
     % --- 表格部分 ---
-    % 使用 longtable 实现跨页，去除续表功能，仅开放上下边界
-    \begin{longtable}{|Y|Y|Y|}
+    % 使用 longtable 实现跨页，定义3列表格
+    % 三列等宽，总宽度使用 \textwidth 确保不溢出
+    \begin{longtable}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
     \hline
     % 第一行：学号、姓名、班级
     \sffamily 学号：\rmfamily \@StudentId & 
@@ -82,31 +81,43 @@
     \sffamily 班级：\rmfamily \@ClassName \\
     \hline
     % 第二行：实验编号
-    \multicolumn{3}{|p{\textwidth}|}{\sffamily 实验编号：\rmfamily \@ExperimentID} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\sffamily 实验编号：\rmfamily \@ExperimentID} \\
     \hline
     % 第三行：实验题目
-    \multicolumn{3}{|p{\textwidth}|}{\sffamily 实验题目：\rmfamily \@ExperimentTitle} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\sffamily 实验题目：\rmfamily \@ExperimentTitle} \\
     \hline
     % 第四行：实验学时、实验日期
-    \sffamily 实验学时：\rmfamily \@ExperimentHours &
-    \multicolumn{2}{p{0.66\textwidth}|}{\sffamily 实验日期：\rmfamily \@ExperimentDate} \\
+    \multicolumn{1}{|p{4.5cm}|}{\sffamily 实验学时：\rmfamily \@ExperimentHours} &
+    \multicolumn{2}{p{\dimexpr9cm+2\tabcolsep}|}{\sffamily 实验日期：\rmfamily \@ExperimentDate} \\
     \hline
     % 后续内容部分
     \multicolumn{3}{|l|}{\textbf{实验目的：}} \\
-    \multicolumn{3}{|p{\textwidth}|}{\parbox[t][3\baselineskip][t]{\textwidth}{\@ExperimentPurpose}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][3\baselineskip][t]{\linewidth}{\@ExperimentPurpose}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{硬件环境：}} \\
-    \multicolumn{3}{|p{\textwidth}|}{\parbox[t][2\baselineskip][t]{\textwidth}{\@HardwareEnv}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@HardwareEnv}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{软件环境：}} \\
-    \multicolumn{3}{|p{\textwidth}|}{\parbox[t][2\baselineskip][t]{\textwidth}{\@SoftwareEnv}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@SoftwareEnv}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{实验步骤与内容：}} \\
-    \multicolumn{3}{|p{\textwidth}|}{\parbox[t][10\baselineskip][t]{\textwidth}{\@procedurecontent}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][10\baselineskip][t]{\linewidth}{\@procedurecontent}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{结论分析与体会：} } \\
-    \multicolumn{3}{|p{\textwidth}|}{\parbox[t][8\baselineskip][t]{\textwidth}{\@reflectioncontent}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][8\baselineskip][t]{\linewidth}{\@reflectioncontent}} \\
     \hline
+    \endfirsthead
+
+    % 定义续页的表头
+    \multicolumn{3}{c}%
+    {{\bfseries \@CourseName 课程实验报告 (续)}} \\
+    \hline
+    \endhead
+
+    % 定义表格末尾
+    \hline
+    \endfoot
+    
     \end{longtable}
 }
 
