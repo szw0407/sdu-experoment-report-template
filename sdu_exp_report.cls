@@ -35,7 +35,7 @@
 \setCJKmonofont{Noto Sans Mono CJK SC}[UprightFont=*, BoldFont=* Bold]
 
 % 5. 定义报告信息存储命令
-\newcommand{\DepartmentNam}[1]{\def\@DepartmentNam{#1}}
+\newcommand{\DepartmentName}[1]{\def\@DepartmentName{#1}}
 \newcommand{\CourseName}[1]{\def\@CourseName{#1}}
 \newcommand{\StudentId}[1]{\def\@StudentId{#1}}
 \newcommand{\StudentName}[1]{\def\@StudentName{#1}}
@@ -64,12 +64,12 @@
     \begin{center}
         \sffamily % 设置为非衬线字体
         \fontsize{15pt}{18pt}\selectfont % 设置字号为 15pt
-        \textbf{山东大学\underline{\hspace{8em}}学院} \\
+        \textbf{山东大学\underline{\hspace{1em }\@DepartmentName\hspace{1em }}学院} \\
         \vspace{4pt} % 标题内的小间距
-        \textbf{\@CourseName 课程实验报告}
+        \textbf{\underline{\hspace{1em }\@CourseName \hspace{1em }}课程实验报告}
     \end{center}
     \vspace{10.5pt} % 标题与表格之间的间距
-
+    \noindent
     % --- 表格部分 ---
     % 使用 longtable 实现跨页，定义3列表格
     \begin{longtable}{|p{5.5cm}|p{4.5cm}|p{4.5cm}|}
