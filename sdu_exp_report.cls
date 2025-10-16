@@ -34,6 +34,14 @@
 \setCJKsansfont{Noto Sans CJK SC}[UprightFont=*, BoldFont=* Bold]
 \setCJKmonofont{Noto Sans Mono CJK SC}[UprightFont=*, BoldFont=* Bold]
 
+% ==== 新增：全局与表格行距设置，避免拥挤 ====
+% 全局行距（基于 10.5pt，略放大）
+\linespread{1} 
+% 表格默认行高：增大行距和额外行高
+\renewcommand{\arraystretch}{1}
+\setlength{\extrarowheight}{0.5ex}
+% ============================================
+
 % 5. 定义报告信息存储命令
 \newcommand{\DepartmentName}[1]{\def\@DepartmentName{#1}}
 \newcommand{\CourseName}[1]{\def\@CourseName{#1}}
@@ -82,11 +90,26 @@
                 \textsf{\textbf{实验时长：}} \@ExperimentHours & \textsf{\textbf{实验日期：}} \@ExperimentDate
             \end{tabular*}
         } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{实验目的：}} \@ExperimentPurpose} \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{硬件环境：}} \@HardwareEnv} \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{软件环境：}} \@SoftwareEnv} \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{实验步骤及内容：}} \@procedurecontent} \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{结论分析与体会：}} \@reflectioncontent} \\
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
+            \textsf{\textbf{实验目的：}} \@ExperimentPurpose
+            \rule{0pt}{3\baselineskip}%
+        } \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
+            \textsf{\textbf{硬件环境：}} \@HardwareEnv
+            \rule{0pt}{2\baselineskip}%
+        } \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
+            \textsf{\textbf{软件环境：}} \@SoftwareEnv
+            \rule{0pt}{2\baselineskip}%
+        } \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
+            \textsf{\textbf{实验步骤及内容：}} \@procedurecontent
+            \rule{0pt}{2in}%
+        } \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
+            \textsf{\textbf{结论分析与体会：}} \@reflectioncontent
+            \rule{0pt}{1.5in}%
+        } \\
         \hline
     \end{xltabular}
 }
