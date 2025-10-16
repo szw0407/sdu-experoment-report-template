@@ -7,7 +7,8 @@
 \RequirePackage{geometry}     % 设置页边距
 \RequirePackage{fontspec}     % 字体控制 (XeLaTeX 必需)
 \RequirePackage{xeCJK}        % 中文处理
-\RequirePackage{ltxtable}
+% \RequirePackage{ltxtable}
+\RequirePackage{xltabular}    % 支持跨页表格
 \RequirePackage{array}        % 自定义列类型
 \RequirePackage{colortbl}     % 表格颜色
 \RequirePackage{hhline}       % 自定义表格线
@@ -69,8 +70,24 @@
     \end{center}
     \vspace{10.5pt} % 标题与表格之间的间距
     % --- 表格部分 ---
-    % 使用 longtable 实现跨页，定义3列表格
-    % 三列等宽，总宽度使用 \textwidth 确保不溢出
-    \LTXtable{\textwidth}{test_table.tex}
+    \begin{xltabular}
+        {\linewidth}{|X|X|X|}\endhead
+        \hline
+        \textsf{\textbf{姓名：}} \@StudentName & \textsf{\textbf{学号：}} \@StudentId & \textsf{\textbf{班级：}} \@ClassName \\
+        \hline
+        \multicolumn{3}{|l|}{\textsf{\textbf{实验编号：}} \@ExperimentID} \\ \hline
+        \multicolumn{3}{|l|}{\textsf{\textbf{实验标题：}} \@ExperimentTitle} \\ \hline
+        \multicolumn{3}{|l|}{%
+            \begin{tabular*}{\linewidth}{@{}p{0.4\linewidth}|p{0.6\linewidth}@{}}
+                \textsf{\textbf{实验时长：}} \@ExperimentHours & \textsf{\textbf{实验日期：}} \@ExperimentDate
+            \end{tabular*}
+        } \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{实验目的：}} \@ExperimentPurpose} \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{硬件环境：}} \@HardwareEnv} \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{软件环境：}} \@SoftwareEnv} \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{实验步骤及内容：}} \@procedurecontent} \\ \hline
+        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{\textsf{\textbf{结论分析与体会：}} \@reflectioncontent} \\
+        \hline
+    \end{xltabular}
 }
 
