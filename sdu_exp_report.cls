@@ -8,7 +8,7 @@
 \RequirePackage{fontspec}     % 字体控制 (XeLaTeX 必需)
 \RequirePackage{xeCJK}        % 中文处理
 % \RequirePackage{ltxtable}
-\RequirePackage{xltabular}    % 支持跨页表格
+\RequirePackage{tabularx}     % 支持自动列宽表格
 \RequirePackage{array}        % 自定义列类型
 \RequirePackage{colortbl}     % 表格颜色
 \RequirePackage{hhline}       % 自定义表格线
@@ -16,6 +16,8 @@
 \RequirePackage{environ}      % 用于捕获环境内容
 \RequirePackage{zhnumber}     % 中文数字和日期
 \RequirePackage{ifxetex}
+\RequirePackage{amsmath}      % 数学公式
+\RequirePackage{mdframed}     % 盒子环境
 \RequireXeTeX
 \ifxetex\else
     \ClassError{sdu_exp_report}{You must use the 'xelatex' driver.}{Please choose 'xelatex'.}
@@ -56,14 +58,8 @@
 \newcommand{\ExperimentPurpose}[1]{\def\@ExperimentPurpose{#1}}
 \newcommand{\HardwareEnv}[1]{\def\@HardwareEnv{#1}}
 \newcommand{\SoftwareEnv}[1]{\def\@SoftwareEnv{#1}}
-
-% 6. 定义用于捕获内容的环境
-\NewEnviron{procedure}{\gdef\@procedurecontent{\BODY}}
-\NewEnviron{reflection}{\gdef\@reflectioncontent{\BODY}}
-
-% 7. 定义默认空内容
-\gdef\@procedurecontent{}
-\gdef\@reflectioncontent{}
+\newcommand{\ExperimentProcedure}[1]{\def\@ExperimentProcedure{#1}}
+\newcommand{\ExperimentReflection}[1]{\def\@ExperimentReflection{#1}}
 
 % 8. 核心绘图命令：\DrawExperimentReport
 \newcommand{\DrawExperimentReport}{%
@@ -78,39 +74,53 @@
     \end{center}
     % \vspace{3pt} % 标题与表格之间的间距
     % --- 表格部分 ---
-    \begin{xltabular}
-        {\linewidth}{|X|X|X|}\endhead
+    \begin{tabularx}
+        {\linewidth}{|X|X|X|}
         \hline
         \textsf{\textbf{姓名：}} \@StudentName & \textsf{\textbf{学号：}} \@StudentId & \textsf{\textbf{班级：}} \@ClassName \\
         \hline
         \multicolumn{3}{|l|}{\textsf{\textbf{实验编号：}} \@ExperimentID} \\ \hline
         \multicolumn{3}{|l|}{\textsf{\textbf{实验标题：}} \@ExperimentTitle} \\ \hline
         \multicolumn{3}{|l|}{%
-            \begin{tabular*}{\linewidth}{@{}p{0.4\linewidth}|p{0.6\linewidth}@{}}
+            \begin{tabular*}{0.9\linewidth}{@{}p{0.4\linewidth}|p{0.6\linewidth}@{}}
                 \textsf{\textbf{实验时长：}} \@ExperimentHours & \textsf{\textbf{实验日期：}} \@ExperimentDate
             \end{tabular*}
         } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
-            \textsf{\textbf{实验目的：}} \@ExperimentPurpose
-            \vspace*{2.5\baselineskip}%
-        } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
-            \textsf{\textbf{硬件环境：}} \@HardwareEnv
-            \vspace*{1.5\baselineskip}%
-        } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
-            \textsf{\textbf{软件环境：}} \@SoftwareEnv
-            \vspace*{1.5\baselineskip}%
-        } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
-            \textsf{\textbf{实验步骤及内容：}} \@procedurecontent
-            \vspace*{2in}%
-        } \\ \hline
-        \multicolumn{3}{|>{\RaggedRight\arraybackslash}p{\dimexpr\linewidth-2\tabcolsep\relax}|}{%
-            \textsf{\textbf{结论分析与体会：}} \@reflectioncontent
-            \vspace*{1.7in}%
-        } \\
-        \hline
-    \end{xltabular}
+    \end{tabularx}%
+    % \nointerlineskip% 消除行间距
+    \vspace{-3pt} % 表格与正文之间的间距
+    \begin{mdframed}[
+        style=mymdfstyle,
+        innertopmargin=2pt,
+        skipabove=0pt,
+        innerleftmargin=6pt,
+    ]
+    \textsf{硬件环境：} \@HardwareEnv
+    \mdfsubtitle[
+        subtitleaboveline=true,
+        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
+        subtitlebelowskip=0.2\baselineskip,
+        subtitleinneraboveskip=0pt,
+        subtitleinnerbelowskip=0pt,
+    ]{}
+    \textsf{软件环境：} \@SoftwareEnv
+    \mdfsubtitle[
+        subtitleaboveline=true,
+        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
+        subtitlebelowskip=0.2\baselineskip,
+        subtitleinneraboveskip=0pt,
+        subtitleinnerbelowskip=0pt,
+    ]{}
+    \textsf{实验步骤及内容：} \@ExperimentProcedure
+    \mdfsubtitle[
+        subtitleaboveline=true,
+        subtitleabovelinewidth=0.8pt, % 经验值，肉眼看跟上面 linewidth = 0.5pt 粗细差不多
+        subtitlebelowskip=0.2\baselineskip,
+        subtitleinneraboveskip=0pt,
+        subtitleinnerbelowskip=0pt,
+    ]{}
+    \textsf{结论分析与体会：} \@ExperimentReflection
+
+    \end{mdframed}
 }
 
