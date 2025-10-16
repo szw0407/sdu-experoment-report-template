@@ -72,7 +72,8 @@
     \noindent
     % --- 表格部分 ---
     % 使用 longtable 实现跨页，定义3列表格
-    \begin{longtable}{|p{5.5cm}|p{4.5cm}|p{4.5cm}|}
+    % 三列等宽，总宽度使用 \textwidth 确保不溢出
+    \begin{longtable}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
     \hline
     % 第一行：学号、姓名、班级
     \sffamily 学号：\rmfamily \@StudentId & 
@@ -80,30 +81,30 @@
     \sffamily 班级：\rmfamily \@ClassName \\
     \hline
     % 第二行：实验编号
-    \multicolumn{3}{|p{14.5cm}|}{\sffamily 实验编号：\rmfamily \@ExperimentID} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\sffamily 实验编号：\rmfamily \@ExperimentID} \\
     \hline
     % 第三行：实验题目
-    \multicolumn{3}{|p{14.5cm}|}{\sffamily 实验题目：\rmfamily \@ExperimentTitle} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\sffamily 实验题目：\rmfamily \@ExperimentTitle} \\
     \hline
     % 第四行：实验学时、实验日期
-    \multicolumn{1}{|p{5.8cm}|}{\sffamily 实验学时：\rmfamily \@ExperimentHours} &
-    \multicolumn{2}{p{8.7cm}|}{\sffamily 实验日期：\rmfamily \@ExperimentDate} \\
+    \multicolumn{1}{|p{4.5cm}|}{\sffamily 实验学时：\rmfamily \@ExperimentHours} &
+    \multicolumn{2}{p{\dimexpr9cm+2\tabcolsep}|}{\sffamily 实验日期：\rmfamily \@ExperimentDate} \\
     \hline
     % 后续内容部分
     \multicolumn{3}{|l|}{\textbf{实验目的：}} \\
-    \multicolumn{3}{|p{14.5cm}|}{\parbox[t][3\baselineskip][t]{\linewidth}{\@ExperimentPurpose}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][3\baselineskip][t]{\linewidth}{\@ExperimentPurpose}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{硬件环境：}} \\
-    \multicolumn{3}{|p{14.5cm}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@HardwareEnv}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@HardwareEnv}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{软件环境：}} \\
-    \multicolumn{3}{|p{14.5cm}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@SoftwareEnv}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][2\baselineskip][t]{\linewidth}{\@SoftwareEnv}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{实验步骤与内容：}} \\
-    \multicolumn{3}{|p{14.5cm}|}{\parbox[t][10\baselineskip][t]{\linewidth}{\@procedurecontent}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][10\baselineskip][t]{\linewidth}{\@procedurecontent}} \\
     \hline
     \multicolumn{3}{|l|}{\textbf{结论分析与体会：} } \\
-    \multicolumn{3}{|p{14.5cm}|}{\parbox[t][8\baselineskip][t]{\linewidth}{\@reflectioncontent}} \\
+    \multicolumn{3}{|p{\dimexpr\textwidth-2\tabcolsep-2\arrayrulewidth}|}{\parbox[t][8\baselineskip][t]{\linewidth}{\@reflectioncontent}} \\
     \hline
     \endfirsthead
 
