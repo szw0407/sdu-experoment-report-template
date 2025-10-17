@@ -6,8 +6,7 @@
 % 2. 宏包导入
 \RequirePackage{geometry}     % 设置页边距
 \RequirePackage{fontspec}     % 字体控制 (XeLaTeX 必需)
-\RequirePackage{xeCJK}        % 中文处理
-% \RequirePackage{ltxtable}
+% \RequirePackage{luatexja-f}        % 中文处理
 \RequirePackage{tabularx}     % 支持自动列宽表格
 \RequirePackage{array}        % 自定义列类型
 \RequirePackage{colortbl}     % 表格颜色
@@ -18,10 +17,7 @@
 \RequirePackage{ifxetex}
 \RequirePackage{amsmath}      % 数学公式
 \RequirePackage{mdframed}     % 盒子环境
-\RequireXeTeX
-\ifxetex\else
-    \ClassError{sdu_exp_report}{You must use the 'xelatex' driver.}{Please choose 'xelatex'.}
-\fi
+
 \setlength{\parindent}{0pt} % Disable indentation globally
 % 3. 几何布局 (页边距)
 \geometry{
@@ -30,11 +26,14 @@
     left=3.18cm,
     right=3.18cm
 }
+\RequirePackage{fontspec}
 
-% 4. 字体设置 (确保系统中已安装 Noto 字体)
-\setCJKmainfont{Noto Serif CJK SC}[UprightFont=*, BoldFont=* Bold]
-\setCJKsansfont{Noto Sans CJK SC}[UprightFont=*, BoldFont=* Bold]
-\setCJKmonofont{Noto Sans Mono CJK SC}[UprightFont=*, BoldFont=* Bold]
+\directlua{ luaotfload.add_fallback("fallbacks", { "Noto Color Emoji:mode=harf;" }) }
+  
+\setmainfont{Noto Serif CJK SC}[UprightFont=*, BoldFont=* Bold,RawFeature={fallback=fallbacks}]
+\setmonofont{Noto Sans Mono CJK SC}[UprightFont=*, BoldFont=* Bold,RawFeature={fallback=fallbacks}]
+\setsansfont{Noto Sans CJK SC}[RawFeature={fallback=fallbacks}]
+
 
 % ==== 新增：全局与表格行距设置，避免拥挤 ====
 % 全局行距（基于 10.5pt，略放大）
@@ -112,15 +111,16 @@
             \end{tabular*}
         } \\ \hline
     \end{tabularx}%
-    % \nointerlineskip% 消除行间距
-    \vspace{-3pt} % 表格与正文之间的间距
+    \vspace{-1.5pt} % 表格与正文之间的间距
     \begin{mdframed}[
         style=mymdfstyle,
         innertopmargin=2pt,
         skipabove=0pt,
         innerleftmargin=6pt,
     ]
-    \textsf{硬件环境：} \@HardwareEnv
+    \textsf{硬件环境：} 
+    
+    \@HardwareEnv
     \mdfsubtitle[
         subtitleaboveline=true,
         subtitleabovelinewidth=0.5pt,
@@ -128,7 +128,11 @@
         subtitleinneraboveskip=0pt,
         subtitleinnerbelowskip=0pt,
     ]{}
-    \textsf{软件环境：} \@SoftwareEnv
+    \textsf{软件环境：} 
+    
+    \@SoftwareEnv
+    % 下方空区而不用再开一个格子
+    \vspace{1.5em}
     \end{mdframed}
 }
 
